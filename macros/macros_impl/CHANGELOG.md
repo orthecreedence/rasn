@@ -20,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 +
 +## [Unreleased]
 
+## [0.28.2](https://github.com/orthecreedence/rasn/compare/rasn-derive-impl-v0.28.1...rasn-derive-impl-v0.28.2) - 2026-01-03
+
+### Other
+
+- Derive Decode changes to make generics more robust
+- Fixing #[derive(Decode)] issue where generics were not passed into the decode op, causing an error when deriving/compiling
+
 ## [0.28.1](https://github.com/librasn/rasn/compare/rasn-derive-impl-v0.28.0...rasn-derive-impl-v0.28.1) - 2025-11-19
 
 ### Fixed

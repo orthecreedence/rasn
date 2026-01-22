@@ -32,6 +32,570 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.29.0](https://github.com/orthecreedence/rasn/compare/rasn-v0.28.4...rasn-v0.29.0) - 2026-01-22
+
+### Added
+
+- Added From implementations for OctetString for BytesImpl ([#525](https://github.com/orthecreedence/rasn/pull/525))
+- #[derive(Decode)] changes to make generics more robust ([#515](https://github.com/orthecreedence/rasn/pull/515))
+- Add IEEE 1609.2-2022 , ETSI TS 103097 standards ([#389](https://github.com/orthecreedence/rasn/pull/389))
+- inner subtype constraint ([#437](https://github.com/orthecreedence/rasn/pull/437))
+- support multi-field tuple-structs with delegate if other types are ([#436](https://github.com/orthecreedence/rasn/pull/436))
+- encode/decode for PhantomData ([#433](https://github.com/orthecreedence/rasn/pull/433))
+- *(bench)* Add seperate encode and rtt benchmarks for X.509 ([#432](https://github.com/orthecreedence/rasn/pull/432))
+- add graphic string support ([#410](https://github.com/orthecreedence/rasn/pull/410))
+- [**breaking**] Add basic support for REAL using f32/f64 with JER/OER rules ([#406](https://github.com/orthecreedence/rasn/pull/406))
+- add a convenience macro for parsing string literals into `&'static Oid`s ([#404](https://github.com/orthecreedence/rasn/pull/404))
+- Implement Algorithms and Identifiers PKIX module
+- [**breaking**] update snafu to 0.8.5, impl `core::error::Error` for error types
+- Export rasn-compiler as optional feature
+- [**breaking**] Rework for SetOf type ([#325](https://github.com/orthecreedence/rasn/pull/325))
+- [**breaking**] Remove option_type ([#329](https://github.com/orthecreedence/rasn/pull/329))
+- Constraint utilities, const default, more const functions ([#321](https://github.com/orthecreedence/rasn/pull/321))
+- [**breaking**] `Integer` as enum type and optimized constrained and variable-sized integer encoding ([#289](https://github.com/orthecreedence/rasn/pull/289))
+- Impl Display for Oid ([#297](https://github.com/orthecreedence/rasn/pull/297))
+- add asn type date ([#284](https://github.com/orthecreedence/rasn/pull/284))
+
+### Fixed
+
+- Add depth limit to decoder to prevent stack overflow ([#514](https://github.com/orthecreedence/rasn/pull/514)) ([#516](https://github.com/orthecreedence/rasn/pull/516))
+- Sanitize field attributes when expanding Decode and Encode ([#509](https://github.com/orthecreedence/rasn/pull/509))
+- *(ber)* [**breaking**] Explicit errors when decoding optional any, proper TLV extraction in sequence ([#504](https://github.com/orthecreedence/rasn/pull/504))
+- use full paths for field encode/decode, remove nightly CI ([#499](https://github.com/orthecreedence/rasn/pull/499))
+- *(ber)* don't include full error information when encountering EOF during decoding ([#497](https://github.com/orthecreedence/rasn/pull/497))
+- *(per)* Fix constrained length encoding/decoding for SIZE(0..65535) ([#493](https://github.com/orthecreedence/rasn/pull/493))
+- *(xer)* Fix encoding for sequences containing elements after a SEQUENCE OF or SET OF
+- *(xer)* Fix encoding of sequences with elements after a CHOICE
+- *(uper)* empty outer encoding ([#466](https://github.com/orthecreedence/rasn/pull/466))
+- OctetString PartialEq implementation with arc-slice feature ([#476](https://github.com/orthecreedence/rasn/pull/476))
+- *(OER/PER)* detect choice type always correctly on explicit prefix ([#479](https://github.com/orthecreedence/rasn/pull/479))
+- #472 and add explicit integer conversion tests ([#474](https://github.com/orthecreedence/rasn/pull/474))
+- improve constraint performance and bounded intersection ([#440](https://github.com/orthecreedence/rasn/pull/440))
+- remove SetOf hashbrown dependency ([#438](https://github.com/orthecreedence/rasn/pull/438))
+- BER: improve GeneralizedTime parsing ([#426](https://github.com/orthecreedence/rasn/pull/426))
+- some clippy lints causing CI to fail ([#405](https://github.com/orthecreedence/rasn/pull/405))
+- *(derive)* use `const` blocks and add generic bounds when generating an enum's `AsnType` impl ([#398](https://github.com/orthecreedence/rasn/pull/398))
+- add missing `Copy` impl to `FixedOctetString<N>` ([#396](https://github.com/orthecreedence/rasn/pull/396))
+- remove `Default` bound from `[T; N]`'s `Decode` impl ([#395](https://github.com/orthecreedence/rasn/pull/395))
+- Fix PER encoding of empty octet strings missing the length determinant ([#393](https://github.com/orthecreedence/rasn/pull/393))
+- FixedBitString might work as expected ([#385](https://github.com/orthecreedence/rasn/pull/385))
+- split iai and criterion benches, use correct adapters ([#366](https://github.com/orthecreedence/rasn/pull/366))
+- cleanup some unnecessary dependencies ([#362](https://github.com/orthecreedence/rasn/pull/362))
+- remove version pin from release-plz ([#356](https://github.com/orthecreedence/rasn/pull/356))
+- Don't override generics impl in proc-macros on encode impl ([#354](https://github.com/orthecreedence/rasn/pull/354))
+- pin release-plz version until fixed ([#353](https://github.com/orthecreedence/rasn/pull/353))
+- decoding of extended fields in sequence in BER ([#351](https://github.com/orthecreedence/rasn/pull/351))
+- Fix most issues related to dependency update, except hashbrown version ([#349](https://github.com/orthecreedence/rasn/pull/349))
+- Run clippy and rustdoc only on stable channel in CI ([#342](https://github.com/orthecreedence/rasn/pull/342))
+- Reroll back to BTreeMap for field presence tracking ([#338](https://github.com/orthecreedence/rasn/pull/338))
+- [**breaking**] Change *_constraint macros to accept `extensible` keyword over bool
+- [**breaking**] Remove jer feature, jer is enabled by default
+- [**breaking**] Remove Tag and TagTree from module root
+- [**breaking**] Make codec module private
+- Move BER integer leading byte handling to codec level ([#299](https://github.com/orthecreedence/rasn/pull/299))
+- pass constraints correctly when encoding optional type ([#276](https://github.com/orthecreedence/rasn/pull/276))
+- Hide `jer` behind feature (implying `std`). ([#266](https://github.com/orthecreedence/rasn/pull/266))
+- decoding integers encoded with byte lengths greater than `{integer}::BITS / 8` would cause a subtraction underflow and subsequent index panic ([#257](https://github.com/orthecreedence/rasn/pull/257))
+- *(jer)* ENUMERATED values as strings ([#242](https://github.com/orthecreedence/rasn/pull/242))
+- fix char and index maps, enable tests ([#230](https://github.com/orthecreedence/rasn/pull/230))
+- fix no_std being commented out
+- *(types)* stack overflow in ObjectIdentifier PartialEq ([#223](https://github.com/orthecreedence/rasn/pull/223))
+- *(der)* sort SET OF items ([#220](https://github.com/orthecreedence/rasn/pull/220))
+- *(macro)* recognize option references ([#219](https://github.com/orthecreedence/rasn/pull/219))
+- *(macros)* handle negative discriminants
+- *(per)* encoding extensible string types ([#179](https://github.com/orthecreedence/rasn/pull/179))
+- *(de)* missing `decode_default_with_tag_and_constraints` ([#170](https://github.com/orthecreedence/rasn/pull/170))
+- remove duplicates in PrintableString char set ([#130](https://github.com/orthecreedence/rasn/pull/130))
+- fix/AttributeCertificateValidityPeriod pub fields
+- fixing kdc/as rep application tag
+- fix explicit prefix decode & encode for macros
+- fix errors in Kerberos OTP
+- fix est
+- fix missing trait in test
+- fix snmp tests
+- fixed implicit tagging of sequences
+- fix kws
+- fix missing pieces for derive
+
+### Other
+
+- Running fmt.
+- Adding AsnType/Encode/Decode implementations for Cow<_, T>, allowing to serialize borrowed and deserialize owned on the same type. Also adding a test for cow ser/de
+- release v0.28.4 ([#524](https://github.com/orthecreedence/rasn/pull/524))
+- release v0.28.3 ([#517](https://github.com/orthecreedence/rasn/pull/517))
+- release v0.28.2 ([#512](https://github.com/orthecreedence/rasn/pull/512))
+- Fixing #[derive(Decode)] issue where generics were not passed into the decode op, causing an error when deriving/compiling ([#513](https://github.com/orthecreedence/rasn/pull/513))
+- Update README.md
+- release v0.28.1 ([#510](https://github.com/orthecreedence/rasn/pull/510))
+- release v0.27.5 ([#500](https://github.com/orthecreedence/rasn/pull/500))
+- release v0.27.4 ([#498](https://github.com/orthecreedence/rasn/pull/498))
+- release v0.27.3 ([#494](https://github.com/orthecreedence/rasn/pull/494))
+- release v0.27.2 ([#490](https://github.com/orthecreedence/rasn/pull/490))
+- release v0.27.1 ([#481](https://github.com/orthecreedence/rasn/pull/481))
+- allow nightly fail, nightly clippy ([#485](https://github.com/orthecreedence/rasn/pull/485))
+- clippy pendantic fixes ([#444](https://github.com/orthecreedence/rasn/pull/444))
+- release v0.27.0 ([#470](https://github.com/orthecreedence/rasn/pull/470))
+- reexport rasn default-features in standard crates ([#477](https://github.com/orthecreedence/rasn/pull/477))
+- *(octet-string)* [**breaking**] wrap octet string in new type ([#469](https://github.com/orthecreedence/rasn/pull/469))
+- *(ci)* fix clippy lints
+- release v0.26.6 ([#464](https://github.com/orthecreedence/rasn/pull/464))
+- release v0.26.5 ([#463](https://github.com/orthecreedence/rasn/pull/463))
+- *(xer)* update xml-no-std ([#462](https://github.com/orthecreedence/rasn/pull/462))
+- release v0.26.4 ([#460](https://github.com/orthecreedence/rasn/pull/460))
+- RFC 8018 PBMAC1 parameters and OID. Contributed under SPDX "MIT OR Apache-2.0" licenses. ([#459](https://github.com/orthecreedence/rasn/pull/459))
+- release v0.26.3 ([#456](https://github.com/orthecreedence/rasn/pull/456))
+- Always emit and accept initial octet for empty BIT STRING ([#458](https://github.com/orthecreedence/rasn/pull/458))
+- remove extra keywords ([#452](https://github.com/orthecreedence/rasn/pull/452))
+- release v0.26.2 ([#439](https://github.com/orthecreedence/rasn/pull/439))
+- RFC 3161 Time-Stamp Protocol (TSP) ASN.1 module.  ([#451](https://github.com/orthecreedence/rasn/pull/451))
+- Add CMS signed attribute CMSAlgorithmProtection. ([#449](https://github.com/orthecreedence/rasn/pull/449))
+- Add PrivateKeyUsagePeriod certificate extension. ([#448](https://github.com/orthecreedence/rasn/pull/448))
+- OER origins ([#446](https://github.com/orthecreedence/rasn/pull/446))
+- Replace CI scripts with justfile which can be used locally as well ([#441](https://github.com/orthecreedence/rasn/pull/441))
+- release v0.26.1 ([#434](https://github.com/orthecreedence/rasn/pull/434))
+- release v0.26.0 ([#423](https://github.com/orthecreedence/rasn/pull/423))
+- chore!(integer): Wrap integer in newtype wrapper to hide implementation ([#429](https://github.com/orthecreedence/rasn/pull/429))
+- Clarify error message for UnexpectedEmptyInput ([#427](https://github.com/orthecreedence/rasn/pull/427))
+- Improve constraint compiler errors ([#428](https://github.com/orthecreedence/rasn/pull/428))
+- From -> TryFrom ([#425](https://github.com/orthecreedence/rasn/pull/425))
+- Ignore .profraw, remove related ([#424](https://github.com/orthecreedence/rasn/pull/424))
+- Add decoding iterator, decode_with_remainder, clippy fixes ([#421](https://github.com/orthecreedence/rasn/pull/421))
+- release v0.25.1 ([#422](https://github.com/orthecreedence/rasn/pull/422))
+- Fixes librasn/rasn#418. Add support for explict tags and default values to encode correctly ([#419](https://github.com/orthecreedence/rasn/pull/419))
+- release v0.24.1 ([#411](https://github.com/orthecreedence/rasn/pull/411))
+- Feat/xml encoding rules ([#416](https://github.com/orthecreedence/rasn/pull/416))
+- release v0.23.1 ([#409](https://github.com/orthecreedence/rasn/pull/409))
+- release v0.22.3 ([#402](https://github.com/orthecreedence/rasn/pull/402))
+- release v0.22.2 ([#401](https://github.com/orthecreedence/rasn/pull/401))
+- Better error messages for derives ([#400](https://github.com/orthecreedence/rasn/pull/400))
+- release v0.22.1 ([#380](https://github.com/orthecreedence/rasn/pull/380))
+- fix accidental double backtick in `Integer` docs ([#394](https://github.com/orthecreedence/rasn/pull/394))
+- Fix panic in the JER OctetString decoder if the string isn't even length ([#382](https://github.com/orthecreedence/rasn/pull/382))
+- oer: format! in error messages has too much impact ([#387](https://github.com/orthecreedence/rasn/pull/387))
+- Add `decode_with_remainder` for decoding stream ([#386](https://github.com/orthecreedence/rasn/pull/386))
+- OER: remove nom usage, improve errors ([#384](https://github.com/orthecreedence/rasn/pull/384))
+- Remove trails of BitSlice and unnecessary length checks ([#381](https://github.com/orthecreedence/rasn/pull/381))
+- use shifting to construct primitive integers ([#379](https://github.com/orthecreedence/rasn/pull/379))
+- release v0.21.1 ([#371](https://github.com/orthecreedence/rasn/pull/371))
+- [**breaking**] Add lifetime for `encoder` trait and add allocation improvements based on that (OER) ([#370](https://github.com/orthecreedence/rasn/pull/370))
+- Change trait method signature of octet string decoding to use generic ([#374](https://github.com/orthecreedence/rasn/pull/374))
+- no more BitSlice for general parsing ([#377](https://github.com/orthecreedence/rasn/pull/377))
+- OER: improve decoding presence tracking ([#375](https://github.com/orthecreedence/rasn/pull/375))
+- Make constraints explicitly constant and evaluated in compile time & move some computation there (OER/PER) ([#318](https://github.com/orthecreedence/rasn/pull/318))
+- release v0.21.0 ([#367](https://github.com/orthecreedence/rasn/pull/367))
+- Update README.md
+- Update README.md
+- Update README.md
+- Remove dependency on rayon ([#363](https://github.com/orthecreedence/rasn/pull/363))
+- Extract proc macro into own crate ([#364](https://github.com/orthecreedence/rasn/pull/364))
+- Update base_benchmarks.yml
+- Attempt to fix base benchmarks on CI ([#365](https://github.com/orthecreedence/rasn/pull/365))
+- Update base_benchmarks.yml
+- Update base_benchmarks.yml
+- Create base_benchmarks.yml
+- Update from iai to iai-callgrind ([#358](https://github.com/orthecreedence/rasn/pull/358))
+- black box integer test, use macros ([#360](https://github.com/orthecreedence/rasn/pull/360))
+- Optimize field presence tracking of default/optional/extended fields ([#324](https://github.com/orthecreedence/rasn/pull/324))
+- run x509 benches only on x86_64 or aarch64 ([#355](https://github.com/orthecreedence/rasn/pull/355))
+- Add other X.509 libraries to bench
+- update dependencies
+- update lockfile
+- update lockfile
+- Create FUNDING.yml
+- release v0.20.2 ([#343](https://github.com/orthecreedence/rasn/pull/343))
+- Update to syn2 ([#345](https://github.com/orthecreedence/rasn/pull/345))
+- release ([#340](https://github.com/orthecreedence/rasn/pull/340))
+- OER: Fix tag decoding and optimise choice/tag encoding further ([#341](https://github.com/orthecreedence/rasn/pull/341))
+- Fix some typos and word insertions/deletions ([#339](https://github.com/orthecreedence/rasn/pull/339))
+- release ([#337](https://github.com/orthecreedence/rasn/pull/337))
+- release ([#332](https://github.com/orthecreedence/rasn/pull/332))
+- Use `OR` operator in Cargo.toml `license` field ([#335](https://github.com/orthecreedence/rasn/pull/335))
+- Document more of rasn, add warning on missing documentation
+- Document more of rasn, remove unintentionally public items
+- Add rustdoc lint check
+- documentation lint fixes
+- Add module level top-line doc for JER
+- clippy fixes
+- move common macros into dedicated module
+- ObjectIdentifier::new: first arc may be 2 ([#331](https://github.com/orthecreedence/rasn/pull/331))
+- release ([#320](https://github.com/orthecreedence/rasn/pull/320))
+- fix version-pinned types url ([#326](https://github.com/orthecreedence/rasn/pull/326))
+- Add basic optimizations for allocations in OER ([#323](https://github.com/orthecreedence/rasn/pull/323))
+- release ([#316](https://github.com/orthecreedence/rasn/pull/316))
+- Add new field constructors that accept generics
+- Clippy fixes and CI artifact upload/download update ([#319](https://github.com/orthecreedence/rasn/pull/319))
+- Update itertools to 0.13, update Cargo.lock
+- Add ZERO constant to integer, fix warnings
+- release ([#315](https://github.com/orthecreedence/rasn/pull/315))
+- Replace BTreeMap with HashMap in field_bitfield ([#314](https://github.com/orthecreedence/rasn/pull/314))
+- Two custom bench profiles for lto and debug ([#313](https://github.com/orthecreedence/rasn/pull/313))
+- release ([#312](https://github.com/orthecreedence/rasn/pull/312))
+- Reduce cloning in constraints ([#311](https://github.com/orthecreedence/rasn/pull/311))
+- release ([#309](https://github.com/orthecreedence/rasn/pull/309))
+- release ([#307](https://github.com/orthecreedence/rasn/pull/307))
+- Impl Display for ObjectIdentifier ([#306](https://github.com/orthecreedence/rasn/pull/306))
+- release ([#301](https://github.com/orthecreedence/rasn/pull/301))
+- Remove `to_vec` and `to_left_padded_vec` as unnecessary ([#300](https://github.com/orthecreedence/rasn/pull/300))
+- release ([#298](https://github.com/orthecreedence/rasn/pull/298))
+- release ([#295](https://github.com/orthecreedence/rasn/pull/295))
+- Remove Cargo.lock from gitignore ([#294](https://github.com/orthecreedence/rasn/pull/294))
+- fix untagged sequence bitfield ([#280](https://github.com/orthecreedence/rasn/pull/280))
+- Added cargo.lock ([#292](https://github.com/orthecreedence/rasn/pull/292))
+- release ([#291](https://github.com/orthecreedence/rasn/pull/291))
+- call correct  method for Default and Optional types when value is None. ([#290](https://github.com/orthecreedence/rasn/pull/290))
+- release ([#288](https://github.com/orthecreedence/rasn/pull/288))
+- Add integer value constraint checking for PER encoding ([#287](https://github.com/orthecreedence/rasn/pull/287))
+- release ([#267](https://github.com/orthecreedence/rasn/pull/267))
+- Fix error name regression introduced in a75b26b ([#285](https://github.com/orthecreedence/rasn/pull/285))
+- Unify and Improve error handling of restricted strings ([#269](https://github.com/orthecreedence/rasn/pull/269))
+- fix untagged sequence bitfield bits ([#279](https://github.com/orthecreedence/rasn/pull/279))
+- fix encoding of empty extension values ([#278](https://github.com/orthecreedence/rasn/pull/278))
+- correctly encode null in option in extensions ([#277](https://github.com/orthecreedence/rasn/pull/277))
+- fix empty length decoding, no zero padding allowed ([#274](https://github.com/orthecreedence/rasn/pull/274))
+- decode error when unused preamble bits are not zero ([#273](https://github.com/orthecreedence/rasn/pull/273))
+- check quantity data size on sequence of ([#275](https://github.com/orthecreedence/rasn/pull/275))
+- Fix invalid handling of zero padding on length of length on COER ([#268](https://github.com/orthecreedence/rasn/pull/268))
+- Hide `snafu` backtraces behind `std`. ([#265](https://github.com/orthecreedence/rasn/pull/265))
+- release ([#264](https://github.com/orthecreedence/rasn/pull/264))
+- *(ber)* don't allocate `2 + N` `BigInt`s when parsing OIDs ([#263](https://github.com/orthecreedence/rasn/pull/263))
+- release ([#259](https://github.com/orthecreedence/rasn/pull/259))
+- release ([#253](https://github.com/orthecreedence/rasn/pull/253))
+- Add OID for MGF1. ([#255](https://github.com/orthecreedence/rasn/pull/255))
+- don't heap allocate a BigInt for every integer that is decoded ([#256](https://github.com/orthecreedence/rasn/pull/256))
+- run Clippy also for tests ([#252](https://github.com/orthecreedence/rasn/pull/252))
+- release ([#248](https://github.com/orthecreedence/rasn/pull/248))
+- conditional update on Windows builds ([#251](https://github.com/orthecreedence/rasn/pull/251))
+- oer enumerated de handled zero padding when it should not ([#249](https://github.com/orthecreedence/rasn/pull/249))
+- Remove `backtraces` from `rasn`'s `default` feature ([#247](https://github.com/orthecreedence/rasn/pull/247))
+- Octet Encoding Rules ([#154](https://github.com/orthecreedence/rasn/pull/154))
+- release ([#241](https://github.com/orthecreedence/rasn/pull/241))
+- Fix/jer compliance ([#243](https://github.com/orthecreedence/rasn/pull/243))
+- Feat/identifier annotation ([#239](https://github.com/orthecreedence/rasn/pull/239))
+- release ([#238](https://github.com/orthecreedence/rasn/pull/238))
+- Manually fix the incompatible versions (a result of v0.13.0 release) and some clippy warnings ([#237](https://github.com/orthecreedence/rasn/pull/237))
+- Update version number
+- enable long_sequence_of ([#232](https://github.com/orthecreedence/rasn/pull/232))
+- Add clippy and fix reported issues ([#234](https://github.com/orthecreedence/rasn/pull/234))
+- release ([#231](https://github.com/orthecreedence/rasn/pull/231))
+- *(macros)* Treat Unit Structs as ASN.1 NULL ([#227](https://github.com/orthecreedence/rasn/pull/227))
+- *(README)* add declaration reference ([#159](https://github.com/orthecreedence/rasn/pull/159))
+- Fix calling the specified default fn
+- Add default_initializer_fn optimisation
+- release ([#215](https://github.com/orthecreedence/rasn/pull/215))
+- remove legacy compiler ([#221](https://github.com/orthecreedence/rasn/pull/221))
+- Make backtraces as feature, enabled by default ([#214](https://github.com/orthecreedence/rasn/pull/214))
+- release ([#213](https://github.com/orthecreedence/rasn/pull/213))
+- Remove deprecated chrono functions, redundant constant lifetimes ([#212](https://github.com/orthecreedence/rasn/pull/212))
+- release ([#209](https://github.com/orthecreedence/rasn/pull/209))
+- Fix issue with decoding of BasicOcspResponse. ([#208](https://github.com/orthecreedence/rasn/pull/208))
+- release ([#207](https://github.com/orthecreedence/rasn/pull/207))
+- Fix/issue 204 ([#206](https://github.com/orthecreedence/rasn/pull/206))
+- release ([#203](https://github.com/orthecreedence/rasn/pull/203))
+- Fix PER ObjectIdentifier, Alignment for Choice index encoding ([#202](https://github.com/orthecreedence/rasn/pull/202))
+- release ([#196](https://github.com/orthecreedence/rasn/pull/196))
+- Add `Option<T::EXTENDED_VARIANTS>` for Choice, clippy cleanup for relevant macros ([#200](https://github.com/orthecreedence/rasn/pull/200))
+- Fix issue #192, add APER ExtensiblePersonnelRecord with bug fixes  ([#199](https://github.com/orthecreedence/rasn/pull/199))
+- Feature/jer ([#187](https://github.com/orthecreedence/rasn/pull/187))
+- Field_error improved, Boxed error `kind`, explicit naming also for `DecodeErrorKind` ([#197](https://github.com/orthecreedence/rasn/pull/197))
+- run cargo fmt
+- release ([#191](https://github.com/orthecreedence/rasn/pull/191))
+- Use `ok_or_else` instead of `ok_or` in Error handling for performance ([#195](https://github.com/orthecreedence/rasn/pull/195))
+- Move some generally useful functions from PER to utility module ([#190](https://github.com/orthecreedence/rasn/pull/190))
+- release ([#189](https://github.com/orthecreedence/rasn/pull/189))
+- Shared error module ([#164](https://github.com/orthecreedence/rasn/pull/164))
+- release ([#182](https://github.com/orthecreedence/rasn/pull/182))
+- Fix deprecated chrono functions ([#184](https://github.com/orthecreedence/rasn/pull/184))
+- Add CI check for formatted files and reformat source ([#181](https://github.com/orthecreedence/rasn/pull/181))
+- release ([#180](https://github.com/orthecreedence/rasn/pull/180))
+- release ([#178](https://github.com/orthecreedence/rasn/pull/178))
+- four uper issues ([#177](https://github.com/orthecreedence/rasn/pull/177))
+- release ([#175](https://github.com/orthecreedence/rasn/pull/175))
+- Fixes #146, VisibleString character set ([#147](https://github.com/orthecreedence/rasn/pull/147))
+- Fix/uper integer ([#174](https://github.com/orthecreedence/rasn/pull/174))
+- release ([#173](https://github.com/orthecreedence/rasn/pull/173))
+- Fix/issue 165 ([#172](https://github.com/orthecreedence/rasn/pull/172))
+- release ([#171](https://github.com/orthecreedence/rasn/pull/171))
+- Fix nested choice when no struct/set present ([#169](https://github.com/orthecreedence/rasn/pull/169))
+- Update rust.yml
+- release ([#160](https://github.com/orthecreedence/rasn/pull/160))
+- Gensym field names ([#166](https://github.com/orthecreedence/rasn/pull/166))
+- Delegate newtype EOC ([#163](https://github.com/orthecreedence/rasn/pull/163))
+- Fix Result scoping ([#162](https://github.com/orthecreedence/rasn/pull/162))
+- Fix/issue 141 ([#158](https://github.com/orthecreedence/rasn/pull/158))
+- Fix/infinite recursion ([#157](https://github.com/orthecreedence/rasn/pull/157))
+- Fix/constrained extension ([#156](https://github.com/orthecreedence/rasn/pull/156))
+- fmt
+- Add FixedBitString, use BitStr for encoding
+- use existing codec type
+- Split and improve UTCTime type ([#152](https://github.com/orthecreedence/rasn/pull/152))
+- split OID codec functionality to be usable by other codecs ([#144](https://github.com/orthecreedence/rasn/pull/144))
+- document Codec and methods
+- Add `Codec` enum, update `rasn_snmp::v3::Message`
+- Improves BER GeneralizedTime decoders, support for CER/DER strict mode ([#150](https://github.com/orthecreedence/rasn/pull/150))
+- release ([#143](https://github.com/orthecreedence/rasn/pull/143))
+- Add TryFrom for str type for PrintableString, docs, minor fixes ([#149](https://github.com/orthecreedence/rasn/pull/149))
+- Improved size constraint ([#142](https://github.com/orthecreedence/rasn/pull/142))
+- release ([#138](https://github.com/orthecreedence/rasn/pull/138))
+- Fix OID validation, add docs build for CI, prevent spaces and globbin… ([#140](https://github.com/orthecreedence/rasn/pull/140))
+- Possibly some safer arithmetics ([#137](https://github.com/orthecreedence/rasn/pull/137))
+- release ([#136](https://github.com/orthecreedence/rasn/pull/136))
+- fmt
+- Fix #[no_std] missing from lib
+- release ([#133](https://github.com/orthecreedence/rasn/pull/133))
+- Update Cargo.toml
+- Use workspace for macros
+- correctly handle non-byte-aligned BIT STRING length ([#135](https://github.com/orthecreedence/rasn/pull/135))
+- Fix Clippy warnings ([#132](https://github.com/orthecreedence/rasn/pull/132))
+- Fix SNMP test
+- release ([#131](https://github.com/orthecreedence/rasn/pull/131))
+- Update version in standards
+- release ([#128](https://github.com/orthecreedence/rasn/pull/128))
+- Add FixedOctetString to enforce octet string length at type level
+- Use explicit prefix for Nested
+- Remove BIT STRING null byte truncation in BER
+- Replace ConstOid with Oid
+- Update dependencies
+- update workspace version
+- Release 0.8.2
+- bump macros
+- Release 0.8.1
+- release ([#122](https://github.com/orthecreedence/rasn/pull/122))
+- Create release-plz.yaml
+- Add size comparison example
+- Add constraints to PKIX
+- Update README.md
+- Update README.md
+- Update README.md
+- clippy
+- Implement Aligned Encoding Rules (APER)
+- Fix tag on PKIX CRL extension ([#121](https://github.com/orthecreedence/rasn/pull/121))
+- Use workspace metadata
+- Implement Unpacked Encoding Rules (UPER)
+- Updates for SHA AlgorithmIdentifier Oids; use `==` for ConstOid and ObjectIdentifier ([#120](https://github.com/orthecreedence/rasn/pull/120))
+- Look at data string and pick best guess parse format. Does not yet ha… ([#118](https://github.com/orthecreedence/rasn/pull/118))
+- Disable *android
+- Disable mips*
+- Fix chrono deprecation warning
+- Release 0.7.0
+- Trust Anchors according to RFC 5914 added, including Oid for new content type. Passes cargo test, but no new specific tests added ([#116](https://github.com/orthecreedence/rasn/pull/116))
+- Allow buffer reuse in `Encoder` ([#106](https://github.com/orthecreedence/rasn/pull/106))
+- Fixes #97 Update SNMP v2 module to better match RFC 3416 ([#104](https://github.com/orthecreedence/rasn/pull/104))
+- Added Microsoft Authenticode structures ([#102](https://github.com/orthecreedence/rasn/pull/102))
+- Release 0.6.1
+- Bugfix for indefinite Any parsing, fixes #66 ([#95](https://github.com/orthecreedence/rasn/pull/95))
+- Release 0.6.0
+- very very basic compiler implementation ([#92](https://github.com/orthecreedence/rasn/pull/92))
+- Update rust.yml
+- add old compiler
+- Convert `Result` in macros to `core::result::Result`
+- Make AttributeCertificateClearAttributes fields public
+- AttributeTypeAndValue
+- Release 0.5.3
+- cleaning as_req test
+- adding as_rep test
+- making KrbCredInfo tags explicit
+- making EncryptedData tags explicit
+- Release 0.5.2
+- fmt
+- Account for every possible position of #[tag(explicit)]
+- Add repository field to rasn-pkix
+- Release 0.5.1
+- updating test to full as_req
+- fmt
+- Update dependnencies
+- More explicit prefix macro fixes
+- Update deps
+- Fix explicit tagging in kerberos
+- Fix explicit tag parsing
+- Fixes #67. Fix SHA1_RSA OID typo and add RSAES_OAEP OID
+- Add pkcs7 compat module.
+- Update README.md
+- Update README.md
+- Update README.md
+- Release 0.5.0
+- Replace static_assertions with 1.57 const assert
+- Fix tests and docs
+- Move the top-level documentation into README.md
+- Rename IntoOpaque to ToOpaque
+- Formatting
+- Add initial implementation of S/MIME
+- Add documentation for OCSP
+- Add documentation to Kerberos
+- Remove OID suffix in CMS
+- Add Attribute Certificate in PKIX
+- Add docs and minor improvements to Kerberos
+- format macros
+- Add more derives for OCSP
+- Add more docs and format CMS
+- Implement IETF RFC 3370 and RFC 4108
+- impl Hash for all types in PKIX
+- impl Hash for Any, and add a bunch more OIDs
+- Fix default parsing and TAG_TREE for SEQUENCE variants
+- Fix long form tag decoding
+- Add support for Kerberos & OCSP, and fix explicit tag codegen
+- Add PersonnelRecord test
+- Add address family numbers
+- Formatting
+- Use ty directly instead of inference in macro default
+- Release 0.4.3
+- Added Decoder::decoded_len method to support stream-oriented protocols
+- Release 0.4.2
+- Added missing pub keyword to some fields
+- Added contstructors for non-exhaustive LDAP structs. Fixes #48.
+- Update README.md
+- Update README.md
+- Update README.md
+- Release 0.4.1
+- Added CMS standard: https://datatracker.ietf.org/doc/html/rfc5652 ([#47](https://github.com/orthecreedence/rasn/pull/47))
+- Update README.md
+- Fix wording in README.md ([#46](https://github.com/orthecreedence/rasn/pull/46))
+- Update README.md
+- Release 0.4.0
+- fmt benches
+- Clippy fixes and formatting
+- Add rfc links
+- misc improvements
+- Add more documentation
+- Add DecryptKey OID and prelude module
+- Reformat, and Copy implementations, document, and add convienvience methods for version
+- Add x509 benchmark
+- update dependencies
+- Add new example for RFC 7030 standard ([#41](https://github.com/orthecreedence/rasn/pull/41))
+- Make is_unique an associated method
+- Add LDAP implementation
+- Update and full test for PKIX certificates
+- refactor field encoding and decoding to be more DRY and use default attribute
+- Fix remaining codec bugs found
+- Switch ObjectIdentifier to using Cow internally
+- Fix explicit prefix encoding
+- Add public methods for Any
+- Update docs and teletex string
+- Add CHOICE Tag alias.
+- More fuzzing fixes
+- Improve error message more
+- Validate constructed bit is present
+- Update fuzzing code
+- Add more derives to SNMP v3 types
+- Add rasn-pkix crate
+- Fix time decoding & encoding
+- Add better error messages for fields and choices
+- Add support for SET and explicit tags to macros
+- Add support for SET decoding
+- Add NumericString alias and add Ord to InstanceOf
+- cleanup tests
+- Add SET encoding
+- Add issue 34 test case, closes #34
+- Update issue 35 test
+- Update README.md
+- Update README.md
+- rm dbg
+- Ensure explict prefix encodes constructed values correctly. Closes #35
+- fmt
+- Add SEQUENCE OF alias
+- Remove unneeded newtype
+- Move OID structure and add more OIDs
+- Add support for ANY type
+- Add support for SET OF types
+- Add all OIDs related to RFC 5280
+- Hide warnings for now
+- Rename Ia5String
+- Add Any type
+- Use wildcard for standards directory
+- Fix option decoding
+- Add SNMPv3 to rasn-snmp. ([#33](https://github.com/orthecreedence/rasn/pull/33))
+- Add more trait impls
+- Fix derive codegen
+- Fix OID encoding and decoding for BER and DER ([#29](https://github.com/orthecreedence/rasn/pull/29))
+- Making Implicit and Explicit value's public ([#30](https://github.com/orthecreedence/rasn/pull/30))
+- Move tagging inside the trait implementations
+- Revert "Make field encoding generation more DRY"
+- Add all OIDs from UsefulDefinitions ASN.1 module
+- Make field encoding generation more DRY
+- Add SNMP fuzzing
+- Fix proc macro struct field codecs
+- Improved README, and automatic_tags
+- Fix tag detection in newtype wrappers
+- Changed `slice_range(foo, _, foo.len())` to `slice_from(foo, _)` ([#23](https://github.com/orthecreedence/rasn/pull/23))
+- Fix tagged choice variants
+- Small improvements to error messages, and clean up newly-dead tag constant defs ([#22](https://github.com/orthecreedence/rasn/pull/22))
+- Add proc macros and add trap message test
+- Add docs and tidy up
+- Create TagTree and refactor Tag validation and CHOICE decoding
+- Add iec61850 test
+- Update build.bash
+- Update test.bash
+- Update README.md
+- Release 0.3.1
+- fix some typos ([#15](https://github.com/orthecreedence/rasn/pull/15))
+- add decription and language
+- Update README.md
+- Release 0.3.0
+- Implement MIB-II, Add #[rasn(delegate)] and #[rasn(default)]
+- Implement SMIv1 and MIB-1
+- Add initial benchmarks
+- Add more fuzzing input data
+- Add test case
+- Reverted back to stable compatiblity, fixed various issues.
+- Improved various aspects of rasn-macros
+- version bump
+- Add Oid and use const generics for tag
+- Fix docs.rs badge
+- bump version
+- Update rust.yml
+- Release 0.2.1
+- Add a new `#[rasn(choice)]` field attribute
+- Upgrade bitvec to 0.19.3
+- Upgrade nom to 0.6.0-beta1
+- Update README.md
+- add more docs and licence files
+- Update README.md
+- Update README.md
+- Update README.md
+- Update set_rust_version.bash
+- remove old dependency
+- Release 0.2.0
+- Update rust.yml
+- rm println
+- upgrade nom
+- Update README.md
+- add ci scripts
+- add docs
+- Add more metadata
+- Create rust.yml
+- Add docs and fix constructed encoding for strings
+- correctly handle indefinite lengths
+- Added more fuzzing fixes
+- Implement DER & CER
+- Implement automatic tagging
+- Implement tagging attribute for all valid positions
+- Refactor tests, add option impl, add docs
+- split up proc macro exports
+- Add static asserts and time types
+- Create README.md
+- Fix more macro bugs and make open type complete
+- fuzzing fixes
+- fmt
+- Implemented initial support for choice enums
+- Add initial macro support for structs and enums
+- Removing .vscode from git history
+- Add encoder impl and tests
+- Add encoder stub
+- Refactor tag out of decode
+- TagValue -> AsnType
+- refactored parser into its own file
+- Fix dependency features
+- Refactor trait and error handling
+- Refactor Decoder trait
+- add string
+- Refactored constructed encoding parsing to be generic
+- Add bitstring
+- add types module
+- Added octet string, null, and object identifier
+- Refactor error handling
+- refactor tag from identifier
+- Add initial ber parser
+- new project
+
 ## [0.28.4](https://github.com/librasn/rasn/compare/rasn-v0.28.3...rasn-v0.28.4) - 2026-01-15
 
 ### Fixed
